@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MachuCombo - Plataforma Web de Comercialización de Hoja Machucada en Santiváñez</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                            dark: '#0d2818'
+                        },
+                        earth: {
+                            500: '#8b5a2b',
+                            600: '#6f4518',
+                            700: '#523312'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #16a34a;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans custom-scrollbar antialiased">
+
+    <header class="sticky top-0 z-50 bg-brand-dark/95 backdrop-blur-md border-b border-brand-800 text-white shadow-lg transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo & Brand Title -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 rounded-full bg-earth-600 border-2 border-amber-500 flex items-center justify-center shadow-md overflow-hidden bg-white">
+                        <div class="w-full h-full flex items-center justify-center bg-amber-100 text-earth-700 font-bold text-lg"><i class="fa-solid fa-hammer"></i></div>
+                    </div>
+                    <div>
+                        <span class="text-xl font-black tracking-wider text-amber-400">MACHUCOMBO</span>
+                        <span class="block text-xs text-brand-300 font-medium">Santiváñez, Cochabamba</span>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-1 lg:space-x-4 text-sm font-medium">
+                    <button onclick="switchTab('portada')" id="nav-portada" class="nav-btn px-3 py-2 rounded-lg text-amber-400 bg-brand-900/50 transition hover:text-amber-300">Portada</button>
+                    <button onclick="switchTab('proyecto')" id="nav-proyecto" class="nav-btn px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-brand-900/30 transition">Proyecto</button>
+                    <button onclick="switchTab('estudio')" id="nav-estudio" class="nav-btn px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-brand-900/30 transition">Mercado & Viabilidad</button>
+                    <button onclick="switchTab('tienda')" id="nav-tienda" class="nav-btn px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-brand-900/30 transition relative">Tienda Virtual <span id="cart-badge" class="absolute -top-1 -right-1 bg-amber-500 text-slate-900 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span></button>
+                    <button onclick="switchTab('admin')" id="nav-admin" class="nav-btn px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-brand-900/30 transition"><i class="fa-solid fa-lock mr-1"></i> Admin Compras</button>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center space-x-3">
+                    <button onclick="switchTab('tienda')" class="relative p-2 text-amber-400 hover:text-amber-300">
+                        <i class="fa-solid fa-cart-shopping text-xl"></i>
+                        <span id="cart-badge-mob" class="absolute top-0 right-0 bg-amber-500 text-slate-900 text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">0</span>
+                    </button>
+                    <button onclick="toggleMobileMenu()" class="p-2 text-slate-300 hover:text-white focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-dark border-t border-brand-800 px-4 pt-2 pb-4 space-y-1">
+            <button onclick="switchTab('portada'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-amber-400 font-medium">Portada</button>
+            <button onclick="switchTab('proyecto'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-slate-300 font-medium">Proyecto</button>
+            <button onclick="switchTab('estudio'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-slate-300 font-medium">Mercado & Viabilidad</button>
+            <button onclick="switchTab('tienda'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-slate-300 font-medium">Tienda Virtual</button>
+            <button onclick="switchTab('admin'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-slate-300 font-medium"><i class="fa-solid fa-lock mr-1"></i> Admin Compras</button>
+        </div>
+    </header>
+
+    <main class="min-h-screen pb-16">
+
+        <!-- SECTION 1: PORTADA INSTITUCIONAL -->
+        <section id="sec-portada" class="tab-content py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="bg-gradient-to-br from-brand-900 via-brand-800 to-earth-700 rounded-3xl shadow-2xl overflow-hidden border-2 border-amber-500/40 text-white relative">
+                <!-- Decorative pattern background -->
+                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                
+                <div class="relative z-10 p-8 sm:p-12 lg:p-16 flex flex-col items-center text-center">
+                    <!-- Institutional Badges -->
+                    <div class="flex flex-wrap justify-center items-center gap-6 mb-8">
+                        <div class="bg-white/10 backdrop-blur-md px-6 py-3 rounded-2xl border border-white/20 shadow-lg flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-brand-800 font-bold"><i class="fa-solid fa-graduation-cap"></i></div>
+                            <div class="text-left">
+                                <p class="text-xs text-amber-300 font-semibold uppercase">Dirección Distrital de Educación</p>
+                                <p class="text-sm font-bold text-white">SANTIVÁÑEZ</p>
+                            </div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-md px-6 py-3 rounded-2xl border border-white/20 shadow-lg flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-brand-800 font-bold"><i class="fa-solid fa-school"></i></div>
+                            <div class="text-left">
+                                <p class="text-xs text-amber-300 font-semibold uppercase">Unidad Educativa</p>
+                                <p class="text-sm font-bold text-white">“LUIS GUZMÁN ARAUJO”</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Logo / Emblem -->
+                    <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-gradient-to-tr from-earth-700 to-brand-600 border-4 border-amber-400 shadow-2xl flex items-center justify-center mb-8 transform hover:scale-105 transition duration-300">
+                        <div class="text-center p-2">
+                            <i class="fa-solid fa-mortar-pestle text-5xl sm:text-6xl text-amber-300 mb-1"></i>
+                            <span class="block text-xs font-black tracking-widest text-amber-200">MACHUCOMBO</span>
+                        </div>
+                    </div>
+
+                    <!-- Title -->
+                    <span class="inline-block bg-amber-500/20 text-amber-300 border border-amber-400/30 text-xs font-semibold px-4 py-1.5 rounded-full uppercase tracking-wider mb-4">Proyecto de Emprendimiento Productivo - Técnico Medio en Sistemas</span>
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6 max-w-4xl">
+                        PLATAFORMA WEB PARA LA COMERCIALIZACION DE LA HOJA MACHUCADA EN SANTIVAÑEZ
+                    </h1>
+                    <p class="text-lg sm:text-xl text-brand-100 max-w-3xl mb-10 font-light leading-relaxed">
+                        Solución tecnológica e innovación comercial que optimiza la cadena de valor, higiene y distribución de la hoja de coca machucada para el Parque Industrial y la comunidad de Santiváñez.
+                    </p>
+
+                    <!-- Author & Tutor Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl mb-10 text-left">
+                        <div class="bg-black/30 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-lg">
+                            <h3 class="text-amber-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center"><i class="fa-solid fa-users mr-2"></i> Estudiantes Sustentantes:</h3>
+                            <ul class="space-y-1.5 text-white font-medium text-sm sm:text-base">
+                                <li class="flex items-center"><i class="fa-solid fa-user-graduate text-brand-400 mr-2"></i> Conde Eduard Vladimir</li>
+                                <li class="flex items-center"><i class="fa-solid fa-user-graduate text-brand-400 mr-2"></i> Guzmán Rojas Juan Pablo</li>
+                            </ul>
+                        </div>
+                        <div class="bg-black/30 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-lg">
+                            <h3 class="text-amber-400 text-xs font-bold uppercase tracking-wider mb-3 flex items-center"><i class="fa-solid fa-chalkboard-user mr-2"></i> Docente Guía / Tutor:</h3>
+                            <p class="text-white font-medium text-sm sm:text-base flex items-center">
+                                <i class="fa-solid fa-award text-brand-400 mr-2"></i> Lic. Poca Huanca Lourdes
+                            </p>
+                            <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs text-brand-200">
+                                <span><i class="fa-solid fa-location-dot mr-1 text-amber-400"></i> Santiváñez, Bolivia</span>
+                                <span class="font-bold text-amber-300"><i class="fa-solid fa-calendar mr-1"></i> 2026</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action CTA Buttons -->
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <button onclick="switchTab('tienda')" class="bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold px-8 py-4 rounded-xl shadow-xl transition transform hover:-translate-y-0.5 flex items-center text-base">
+                            <i class="fa-solid fa-store mr-2 text-lg"></i> Ir a la Tienda Virtual
+                        </button>
+                        <button onclick="switchTab('proyecto')" class="bg-white/10 hover:bg-white/20 text-white font-semibold px-8 py-4 rounded-xl border border-white/30 backdrop-blur-md transition flex items-center text-base">
+                            <i class="fa-solid fa-book-open mr-2 text-lg"></i> Leer Documento del Proyecto
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: PROYECTO (PLANTEAMIENTO, OBJETIVOS, JUSTIFICACION) -->
+        <section id="sec-proyecto" class="tab-content hidden py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
+            <!-- Header Title -->
+            <div class="text-center max-w-3xl mx-auto">
+                <span class="text-brand-600 font-bold uppercase tracking-widest text-xs bg-brand-100 px-3 py-1 rounded-full">Documentación Oficial</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-2 mb-4">Planteamiento y Fundamentación del Proyecto</h2>
+                <p class="text-slate-600">Resumen técnico e investigativo basado en el documento de grado oficial de la Unidad Educativa "Luis Guzmán Araujo".</p>
+            </div>
+
+            <!-- Grid Cards for Planteamiento & Problema -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-100 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-brand-100 text-brand-700 rounded-xl flex items-center justify-center text-xl font-bold mb-6">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Diagnóstico del Contexto Productivo</h3>
+                        <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+                            Santiváñez atraviesa una transición hacia una economía de servicios industriales impulsada por su Parque Industrial (PIS). Con una masa crítica de trabajadores y transportistas con poder adquisitivo pero severa escasez de tiempo, el mercado tradicional de la hoja de coca machucada operaba bajo estructuras informales y métodos arcaicos. La plataforma web digitaliza y moderniza este abastecimiento, vinculando la materia prima de primera calidad proveniente del Chapare y Yungas de La Paz con las demandas del sector industrial.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500 flex items-center">
+                        <i class="fa-solid fa-industry text-brand-600 mr-2"></i> Parque Industrial Santiváñez (PIS)
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-100 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-xl flex items-center justify-center text-xl font-bold mb-6">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Planteamiento del Problema</h3>
+                        <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+                            La hoja de coca es un producto tradicional fundamental en Bolivia, pero la coca machucada carecía de disponibilidad práctica, higiene estandarizada y una presentación atractiva. La falta de comercialización formal dificultaba su adquisición por parte de operarios y transportistas, generando pérdidas de tiempo, manipulación precaria sin normas sanitarias y ausencia de trazabilidad en el origen del producto.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500 flex items-center">
+                        <i class="fa-solid fa-shield-halved text-amber-600 mr-2"></i> Higiene y Salubridad Garantizada
+                    </div>
+                </div>
+            </div>
+
+            <!-- Objectives Section -->
+            <div class="bg-gradient-to-r from-brand-900 to-brand-800 rounded-3xl p-8 sm:p-12 text-white shadow-xl">
+                <h3 class="text-2xl font-black mb-8 text-amber-400 flex items-center"><i class="fa-solid fa-list-check mr-3"></i> Objetivos del Emprendimiento</h3>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- General -->
+                    <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10">
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-300 block mb-2"><i class="fa-solid fa-star mr-1"></i> Objetivo General</span>
+                        <p class="text-sm leading-relaxed text-brand-50">
+                            Implementar una solución tecnológica integral, mediante una plataforma web de gestión comercial, que permita sistematizar la cadena de valor de la hoja de coca machucada en el municipio de Santiváñez.
+                        </p>
+                    </div>
+                    <!-- Specific 1 -->
+                    <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10">
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-300 block mb-2"><i class="fa-solid fa-1 mr-1"></i> Específico I</span>
+                        <p class="text-sm leading-relaxed text-brand-50">
+                            Diseñar una plataforma web robusta y escalable con interfaz móvil intuitiva, gestión automatizada de registros, personalización detallada (sabores y texturas) y procesamiento eficiente de transacciones.
+                        </p>
+                    </div>
+                    <!-- Specific 2 -->
+                    <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10">
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-300 block mb-2"><i class="fa-solid fa-2 mr-1"></i> Específico II & III</span>
+                        <p class="text-sm leading-relaxed text-brand-50">
+                            Establecer gestión de inventarios coordinando el suministro desde el Chapare y Yungas de La Paz hacia Santiváñez, estandarizando protocolos de transformación higiénica y empaques que preserven la frescura.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Mission & Vision -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 pt-8 border-t border-brand-700">
+                    <div>
+                        <h4 class="text-amber-300 font-bold mb-2 flex items-center"><i class="fa-solid fa-bullseye mr-2"></i> Misión</h4>
+                        <p class="text-xs sm:text-sm text-brand-100 leading-relaxed">
+                            Modernizar la experiencia de consumo de la hoja de coca machucada en Santiváñez mediante una plataforma web innovadora que garantice accesibilidad, higiene y personalización, conectando la producción legal con el sector industrial.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="text-amber-300 font-bold mb-2 flex items-center"><i class="fa-solid fa-eye mr-2"></i> Visión (2028)</h4>
+                        <p class="text-xs sm:text-sm text-brand-100 leading-relaxed">
+                            Posicionarse como la plataforma tecnológica líder en la comercialización de hoja machucada en Cochabamba, consolidando un modelo digital replicable en otros nodos industriales del país y dignificando el consumo tradicional.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Justification & Tools -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-100">
+                    <h3 class="text-xl font-bold text-slate-900 mb-4 flex items-center text-brand-800"><i class="fa-solid fa-scale-balanced mr-2"></i> Justificación Social, Económica y Cultural</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        Desde la perspectiva social, protege la salud del trabajador industrial al reemplazar el comercio callejero informal por un proceso higiénico estandarizado. Económicamente, dinamiza la cadena de valor eliminando intermediarios y optimizando márgenes. Culturalmente, revaloriza la hoja de coca en el siglo XXI con tecnología de punta y adaptada a la era moderna.
+                    </p>
+                    <div class="flex items-center space-x-4 text-xs font-semibold text-slate-500">
+                        <span class="bg-slate-100 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-circle-check text-brand-600 mr-1"></i> Ley 906 (Coca)</span>
+                        <span class="bg-slate-100 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-circle-check text-brand-600 mr-1"></i> Inocuidad Alimentaria</span>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-100">
+                    <h3 class="text-xl font-bold text-slate-900 mb-4 flex items-center text-brand-800"><i class="fa-solid fa-code mr-2"></i> Herramientas Tecnológicas de Desarrollo</h3>
+                    <ul class="space-y-3 text-sm text-slate-600">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-brand-600 mr-2 mt-1"></i>
+                            <span><strong>Visual Studio Code:</strong> Editor de código fuente gratuito para la programación y depuración del sistema web.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-brand-600 mr-2 mt-1"></i>
+                            <span><strong>HTML5:</strong> Lenguaje de marcado estructurado para organizar todos los contenidos de la plataforma.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-brand-600 mr-2 mt-1"></i>
+                            <span><strong>CSS3 & Tailwind:</strong> Estilos avanzados, diseño responsivo, paleta cromática verde/andina y tipografía optimizada.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-brand-600 mr-2 mt-1"></i>
+                            <span><strong>JavaScript & LocalStorage:</strong> Lógica interactiva del carrito de compras y persistencia de datos de transacciones en base de datos local.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: ESTUDIO DE MERCADO, ESTRUCTURA Y VIABILIDAD -->
+        <section id="sec-estudio" class="tab-content hidden py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
+            <!-- Header -->
+            <div class="text-center max-w-3xl mx-auto">
+                <span class="text-brand-600 font-bold uppercase tracking-widest text-xs bg-brand-100 px-3 py-1 rounded-full">Análisis Estratégico</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-2 mb-4">Mercado, Organización y Viabilidad</h2>
+                <p class="text-slate-600">Estrategias comerciales, segmentación del público, estructura de socios y sostenibilidad financiera del proyecto.</p>
+            </div>
+
+            <!-- Market Analysis & Target -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100">
+                    <div class="w-10 h-10 bg-brand-100 text-brand-700 rounded-lg flex items-center justify-center font-bold mb-4">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Público Objetivo</h3>
+                    <ul class="text-sm text-slate-600 space-y-2">
+                        <li><strong>Principal:</strong> Residentes de la zona urbana de Santiváñez.</li>
+                        <li><strong>Estratégico:</strong> Trabajadores y operarios del Parque Industrial Santiváñez (PIS).</li>
+                        <li><strong>Expansión:</strong> Transportistas de rutas entre Santiváñez, Cochabamba y Valle Alto.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100">
+                    <div class="w-10 h-10 bg-amber-100 text-amber-700 rounded-lg flex items-center justify-center font-bold mb-4">
+                        <i class="fa-solid fa-chess"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Ventaja Competitiva</h3>
+                    <ul class="text-sm text-slate-600 space-y-2">
+                        <li><strong>Eliminación de intermediarios:</strong> Compra directa de productores legales.</li>
+                        <li><strong>Machucado Perfecto:</strong> Personalización de niveles (suave, medio, intenso) y sabores (estevia, vico, menta).</li>
+                        <li><strong>Logística agilizada:</strong> Entregas rápidas y geolocalizadas.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100">
+                    <div class="w-10 h-10 bg-brand-100 text-brand-700 rounded-lg flex items-center justify-center font-bold mb-4">
+                        <i class="fa-solid fa-bullhorn"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Promoción & Distribución</h3>
+                    <ul class="text-sm text-slate-600 space-y-2">
+                        <li><strong>Puerta a puerta industrial:</strong> Activaciones en turnos de entrada al Parque Industrial.</li>
+                        <li><strong>Geofencing:</strong> Publicidad segmentada en redes sociales (radio de 2-5 km).</li>
+                        <li><strong>Alianzas locales:</strong> Líderes de opinión del sector transportista.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Organizational Structure -->
+            <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-100">
+                <h3 class="text-2xl font-bold text-slate-900 mb-6 flex items-center"><i class="fa-solid fa-sitemap mr-3 text-brand-600"></i> Estructura Organizacional de la Empresa</h3>
+                <p class="text-slate-600 text-sm mb-6">El emprendimiento está conformado por dos socios estratégicos con funciones complementarias para asegurar la sostenibilidad y éxito operativo.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-brand-50 p-6 rounded-2xl border border-brand-200">
+                        <span class="inline-block bg-brand-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-3">Socio 1</span>
+                        <h4 class="text-lg font-bold text-slate-900 mb-2">Planificación, Organización y Supervisión</h4>
+                        <ul class="text-sm text-slate-700 space-y-2">
+                            <li><i class="fa-solid fa-check text-brand-600 mr-2"></i> Planificar actividades y establecer metas u objetivos.</li>
+                            <li><i class="fa-solid fa-check text-brand-600 mr-2"></i> Organizar recursos humanos, materiales y financieros.</li>
+                            <li><i class="fa-solid fa-check text-brand-600 mr-2"></i> Elaborar informes y evaluar resultados periódicos.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-amber-50 p-6 rounded-2xl border border-amber-200">
+                        <span class="inline-block bg-amber-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-3">Socio 2</span>
+                        <h4 class="text-lg font-bold text-slate-900 mb-2">Administración y Desarrollo de Proyecto</h4>
+                        <ul class="text-sm text-slate-700 space-y-2">
+                            <li><i class="fa-solid fa-check text-amber-600 mr-2"></i> Administrar los recursos económicos disponibles.</li>
+                            <li><i class="fa-solid fa-check text-amber-600 mr-2"></i> Coordinar y apoyar en la ejecución de actividades de plataforma.</li>
+                            <li><i class="fa-solid fa-check text-amber-600 mr-2"></i> Gestionar proveedores de materia prima y materiales necesarios.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Viability & Costs Summary -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-100">
+                    <h3 class="text-xl font-bold text-slate-900 mb-4 flex items-center text-brand-800"><i class="fa-solid fa-chart-line mr-2"></i> Viabilidad y Sostenibilidad</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        El proyecto es viable porque responde a una necesidad real en Santiváñez, facilitando la conexión directa entre productores y el sector industrial. La inversión inicial moderada en hosting, dominio y equipos tecnológicos se cubre progresivamente con las ventas diarias, asegurando un modelo rentable a largo plazo.
+                    </p>
+                    <div class="space-y-2 text-xs text-slate-500 font-medium">
+                        <p><i class="fa-solid fa-circle-dot text-brand-600 mr-1"></i> Inversión inicial en equipos y desarrollo web.</p>
+                        <p><i class="fa-solid fa-circle-dot text-brand-600 mr-1"></i> Capital de operación para mantenimiento, internet y marketing digital.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-100">
+                    <h3 class="text-xl font-bold text-slate-900 mb-4 flex items-center text-brand-800"><i class="fa-solid fa-coins mr-2"></i> Costos de Producción & Operación</h3>
+                    <ul class="space-y-3 text-sm text-slate-600">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-caret-right text-brand-600 mr-2 mt-1"></i>
+                            <span><strong>Costos Fijos:</strong> Pago mensual de dominio web, hosting, internet y soporte técnico continuo.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-caret-right text-brand-600 mr-2 mt-1"></i>
+                            <span><strong>Costos Variables:</strong> Materia prima (hoja de coca seleccionada), empaques higiénicos sellados, saborizantes (vico, estevia, menta) y distribución.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: TIENDA VIRTUAL INTERACTIVA (PRODUCTOS + PERSONALIZACION + CARRITO) -->
+        <section id="sec-tienda" class="tab-content hidden py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-6 rounded-2xl shadow-md border border-slate-100 gap-4">
+                <div>
+                    <span class="text-brand-600 font-bold uppercase tracking-widest text-xs bg-brand-100 px-3 py-1 rounded-full">E-commerce Local</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-2">Tienda Virtual "MachuCombo"</h2>
+                    <p class="text-slate-600 text-sm">Selecciona tu presentación preferida, personaliza el nivel de machucado, añade complementos y realiza tu pedido.</p>
+                </div>
+                <!-- Cart Toggle Button -->
+                <button onclick="toggleCartModal(true)" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-6 py-3 rounded-xl shadow-lg flex items-center space-x-2 transition">
+                    <i class="fa-solid fa-cart-shopping text-lg"></i>
+                    <span>Ver Carrito (<span id="cart-count-btn">0</span>)</span>
+                </button>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Products will be injected via JS -->
+            </div>
+        </section>
+
+        <!-- SECTION 5: PANEL DE ADMINISTRACION Y REGISTRO DE COMPRAS -->
+        <section id="sec-admin" class="tab-content hidden py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border border-slate-100">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center pb-6 border-b border-slate-200 gap-4">
+                    <div>
+                        <span class="text-amber-600 font-bold uppercase tracking-widest text-xs bg-amber-100 px-3 py-1 rounded-full">Panel de Control</span>
+                        <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mt-2">Registro de Compras (Base de Datos LocalStorage)</h2>
+                        <p class="text-slate-600 text-sm">Historial completo de pedidos registrados en la plataforma web para control administrativo de la tienda.</p>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button onclick="clearAllOrders()" class="bg-rose-100 hover:bg-rose-200 text-rose-700 font-semibold px-4 py-2.5 rounded-xl text-sm transition flex items-center">
+                            <i class="fa-solid fa-trash-can mr-2"></i> Limpiar Registros
+                        </button>
+                        <button onclick="exportOrdersJSON()" class="bg-brand-100 hover:bg-brand-200 text-brand-800 font-semibold px-4 py-2.5 rounded-xl text-sm transition flex items-center">
+                            <i class="fa-solid fa-download mr-2"></i> Exportar JSON
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Overview -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 my-6">
+                    <div class="bg-brand-50 p-5 rounded-xl border border-brand-200">
+                        <p class="text-xs text-brand-700 font-semibold uppercase">Total Compras Registradas</p>
+                        <p id="stat-total-orders" class="text-3xl font-black text-brand-900 mt-1">0</p>
+                    </div>
+                    <div class="bg-amber-50 p-5 rounded-xl border border-amber-200">
+                        <p class="text-xs text-amber-700 font-semibold uppercase">Ingresos Totales (Bs)</p>
+                        <p id="stat-total-revenue" class="text-3xl font-black text-amber-900 mt-1">Bs 0.00</p>
+                    </div>
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        <p class="text-xs text-slate-600 font-semibold uppercase">Estado del Sistema</p>
+                        <p class="text-lg font-bold text-emerald-600 mt-1"><i class="fa-solid fa-circle-check mr-1"></i> Base de Datos Activa</p>
+                    </div>
+                </div>
+
+                <!-- Orders Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700 text-xs uppercase font-bold tracking-wider">
+                                <th class="p-4 rounded-l-xl">ID Pedido</th>
+                                <th class="p-4">Cliente / Celular</th>
+                                <th class="p-4">Fecha & Hora</th>
+                                <th class="p-4">Detalle de Productos</th>
+                                <th class="p-4">Total</th>
+                                <th class="p-4 rounded-r-xl text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-table-body" class="divide-y divide-slate-100 text-sm">
+                            <!-- Injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="empty-orders-msg" class="text-center py-12 text-slate-400">
+                    <i class="fa-solid fa-folder-open text-4xl mb-3 block"></i>
+                    No hay compras registradas en el sistema todavía.
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- CART / CHECKOUT MODAL -->
+    <div id="cart-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex justify-end">
+        <div class="bg-white w-full max-w-md h-full shadow-2xl flex flex-col justify-between transform transition duration-300">
+            <!-- Modal Header -->
+            <div class="p-6 bg-brand-900 text-white flex justify-between items-center border-b border-brand-800">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-cart-shopping text-amber-400 text-lg"></i>
+                    <h3 class="font-bold text-lg">Tu Carrito de Compras</h3>
+                </div>
+                <button onclick="toggleCartModal(false)" class="text-slate-300 hover:text-white p-2">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Cart Items List -->
+            <div id="cart-items-container" class="p-6 flex-1 overflow-y-auto space-y-4 custom-scrollbar">
+                <!-- Injected via JS -->
+            </div>
+
+            <!-- Modal Footer / Checkout Form -->
+            <div class="p-6 bg-slate-50 border-t border-slate-200 space-y-4">
+                <div id="checkout-form-container" class="space-y-3">
+                    <h4 class="font-bold text-sm text-slate-800"><i class="fa-solid fa-user-check text-brand-600 mr-1"></i> Datos de Entrega (Santiváñez / PIS)</h4>
+                    <input type="text" id="cust-name" placeholder="Nombre completo o Empresa" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    <input type="tel" id="cust-phone" placeholder="Número de Celular / WhatsApp" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    <input type="text" id="cust-address" placeholder="Ubicación / Fábrica / Parque Industrial" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                </div>
+
+                <div class="flex justify-between items-center text-lg font-bold text-slate-900 pt-2 border-t border-slate-200">
+                    <span>Total a Pagar:</span>
+                    <span id="cart-modal-total" class="text-brand-700">Bs 0.00</span>
+                </div>
+
+                <button onclick="checkoutOrder()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition flex items-center justify-center">
+                    <i class="fa-solid fa-bag-shopping mr-2"></i> Confirmar Pedido y Registrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CUSTOM MESSAGE BOX MODAL (Instead of alert()) -->
+    <div id="custom-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6 text-center transform transition duration-300">
+            <div id="modal-icon" class="w-16 h-16 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center text-2xl mx-auto mb-4">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 id="modal-title" class="text-xl font-bold text-slate-900 mb-2">¡Operación Exitosa!</h3>
+            <p id="modal-message" class="text-slate-600 text-sm mb-6">El pedido se registró correctamente en la base de datos.</p>
+            <button onclick="closeCustomModal()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl shadow-md transition">
+                Aceptar
+            </button>
+        </div>
+    </div>
+
+    <footer class="bg-brand-dark text-slate-400 py-12 border-t border-brand-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+            <div class="flex justify-center items-center space-x-3">
+                <div class="w-8 h-8 rounded-full bg-earth-600 text-amber-300 flex items-center justify-center font-bold text-sm"><i class="fa-solid fa-hammer"></i></div>
+                <span class="text-white font-bold tracking-wider">MACHUCOMBO - SANTIVÁÑEZ</span>
+            </div>
+            <p class="text-xs text-slate-400 max-w-xl mx-auto">
+                Proyecto de Grado para la obtención del título de Técnico Medio en Sistemas. Unidad Educativa “Luis Guzmán Araujo” - Dirección Distrital de Educación de Santiváñez.
+            </p>
+            <p class="text-xs text-amber-400 font-medium">Estudiantes: Conde Eduard Vladimir & Guzmán Rojas Juan Pablo | Tutor: Lic. Poca Huanca Lourdes (2026)</p>
+        </div>
+    </footer>
+
+    <script>
+        // Store Catalog Products with Customization Options
+        const products = [
+            {
+                id: 1,
+                name: "MachuCombo Tradicional Santiváñez",
+                variety: "Hoja Seleccionada del Trópico (Chapare)",
+                price: 25.00,
+                desc: "Hoja de coca de primera calidad machucada artesanalmente con altos estándares de higiene y frescura.",
+                image: "https://placehold.co/400x300/166534/ffffff?text=MachuCombo+Tradicional",
+                defaultGrind: "medio",
+                defaultAddon: "bicarbonato"
+            },
+            {
+                id: 2,
+                name: "MachuCombo Especial Yungas Premium",
+                variety: "Hoja Seleccionada de los Yungas de La Paz",
+                price: 35.00,
+                desc: "Selección especial para paladares exigentes y transportistas del Parque Industrial. Suavidad y aroma superior.",
+                image: "https://placehold.co/400x300/8b5a2b/ffffff?text=Yungas+Premium",
+                defaultGrind: "suave",
+                defaultAddon: "estevia"
+            },
+            {
+                id: 3,
+                name: "MachuCombo Industrial Reforzado",
+                variety: "Mezcla Especial Energética",
+                price: 30.00,
+                desc: "Diseñado para turnos largos de trabajo industrial. Intenso, refrescante y con larga duración en boca.",
+                image: "https://placehold.co/400x300/14532d/ffffff?text=Industrial+Reforzado",
+                defaultGrind: "intenso",
+                defaultAddon: "menta"
+            }
+        ];
+
+        // Cart State & Orders Database
+        let cart = [];
+        let orders = JSON.parse(localStorage.getItem('machucombo_orders')) || [];
+
+        // Navigation Switcher
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`sec-${tabId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-amber-400', 'bg-brand-900/50');
+                btn.classList.add('text-slate-300');
+            });
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if(activeBtn) {
+                activeBtn.classList.remove('text-slate-300');
+                activeBtn.classList.add('text-amber-400', 'bg-brand-900/50');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Render Store Products
+        function renderStore() {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = '';
+
+            products.forEach(p => {
+                grid.innerHTML += `
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100 flex flex-col justify-between transition hover:shadow-2xl">
+                        <div>
+                            <div class="relative h-48 bg-slate-200 overflow-hidden">
+                                <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x300/16a34a/ffffff?text=Coca+Machucada'">
+                                <span class="absolute top-3 right-3 bg-amber-500 text-slate-900 font-extrabold text-xs px-3 py-1 rounded-full shadow-md">Bs ${p.price.toFixed(2)}</span>
+                            </div>
+                            <div class="p-6 space-y-3">
+                                <span class="text-xs font-bold text-brand-600 bg-brand-50 px-2.5 py-1 rounded-lg">${p.variety}</span>
+                                <h3 class="text-xl font-bold text-slate-900">${p.name}</h3>
+                                <p class="text-slate-600 text-sm leading-relaxed">${p.desc}</p>
+                                
+                                <!-- Customization Options -->
+                                <div class="pt-3 border-t border-slate-100 space-y-3">
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Nivel de Machucado:</label>
+                                        <select id="grind-${p.id}" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2 font-medium focus:outline-none focus:ring-1 focus:ring-brand-500">
+                                            <option value="Suave" ${p.defaultGrind === 'suave' ? 'selected' : ''}>Suave (Hojas delicadas)</option>
+                                            <option value="Medio" ${p.defaultGrind === 'medio' ? 'selected' : ''}>Medio (Equilibrado)</option>
+                                            <option value="Intenso" ${p.defaultGrind === 'intenso' ? 'selected' : ''}>Intenso (Fuerte y duradero)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Complemento / Saborizante:</label>
+                                        <select id="addon-${p.id}" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2 font-medium focus:outline-none focus:ring-1 focus:ring-brand-500">
+                                            <option value="Bicarbonato / Vico" ${p.defaultAddon === 'bicarbonato' ? 'selected' : ''}>Bicarbonato / Vico Tradicional</option>
+                                            <option value="Estevia Natural" ${p.defaultAddon === 'estevia' ? 'selected' : ''}>Estevia Natural (Dulce)</option>
+                                            <option value="Menta Refrescante" ${p.defaultAddon === 'menta' ? 'selected' : ''}>Menta Refrescante</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <button onclick="addToCart(${p.id})" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl shadow-md transition flex items-center justify-center text-sm">
+                                <i class="fa-solid fa-cart-plus mr-2"></i> Añadir al Carrito
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Cart Management
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const grind = document.getElementById(`grind-${productId}`).value;
+            const addon = document.getElementById(`addon-${productId}`).value;
+
+            const cartItemKey = `${productId}-${grind}-${addon}`;
+            const existing = cart.find(item => item.cartItemKey === cartItemKey);
+
+            if(existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({
+                    ...product,
+                    cartItemKey,
+                    selectedGrind: grind,
+                    selectedAddon: addon,
+                    quantity: 1
+                });
+            }
+
+            updateCartUI();
+            showCustomModal("Producto Añadido", `${product.name} (${grind}, con ${addon}) se añadió al carrito.`, "success");
+        }
+
+        function updateCartUI() {
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-badge').innerText = totalCount;
+            document.getElementById('cart-badge-mob').innerText = totalCount;
+            document.getElementById('cart-count-btn').innerText = totalCount;
+
+            const container = document.getElementById('cart-items-container');
+            container.innerHTML = '';
+
+            if(cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-slate-400">
+                        <i class="fa-solid fa-basket-shopping text-4xl mb-3"></i>
+                        <p class="text-sm">Tu carrito está vacío.</p>
+                    </div>
+                `;
+                document.getElementById('cart-modal-total').innerText = "Bs 0.00";
+                return;
+            }
+
+            let totalPrice = 0;
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                totalPrice += itemTotal;
+
+                container.innerHTML += `
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex justify-between items-center">
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-sm text-slate-900">${item.name}</h4>
+                            <p class="text-xs text-slate-500">Machucado: <span class="font-medium text-brand-700">${item.selectedGrind}</span> | Comp: <span class="font-medium text-brand-700">${item.selectedAddon}</span></p>
+                            <p class="text-xs font-bold text-brand-600">Bs ${item.price.toFixed(2)} x ${item.quantity} = Bs ${itemTotal.toFixed(2)}</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="changeQty(${index}, -1)" class="w-7 h-7 bg-white rounded-lg border border-slate-300 text-slate-700 font-bold hover:bg-slate-100">-</button>
+                            <span class="text-sm font-bold">${item.quantity}</span>
+                            <button onclick="changeQty(${index}, 1)" class="w-7 h-7 bg-white rounded-lg border border-slate-300 text-slate-700 font-bold hover:bg-slate-100">+</button>
+                            <button onclick="removeItem(${index})" class="text-rose-500 hover:text-rose-700 p-1 ml-2"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('cart-modal-total').innerText = `Bs ${totalPrice.toFixed(2)}`;
+        }
+
+        function changeQty(index, delta) {
+            cart[index].quantity += delta;
+            if(cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function toggleCartModal(show) {
+            const modal = document.getElementById('cart-modal');
+            if(show) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // Checkout & Database Persistence (LocalStorage)
+        function checkoutOrder() {
+            if(cart.length === 0) {
+                showCustomModal("Carrito Vacío", "Añade al menos un producto a la tienda antes de confirmar tu pedido.", "error");
+                return;
+            }
+
+            const name = document.getElementById('cust-name').value.trim();
+            const phone = document.getElementById('cust-phone').value.trim();
+            const address = document.getElementById('cust-address').value.trim();
+
+            if(!name || !phone || !address) {
+                showCustomModal("Datos Incompletos", "Por favor completa tu nombre, celular y ubicación de entrega en Santiváñez / PIS.", "error");
+                return;
+            }
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const newOrder = {
+                id: 'PED-' + Math.floor(100000 + Math.random() * 900000),
+                date: new Date().toLocaleString(),
+                customer: { name, phone, address },
+                items: [...cart],
+                total: total,
+                status: 'Registrado / En Proceso'
+            };
+
+            orders.unshift(newOrder);
+            localStorage.setItem('machucombo_orders', JSON.stringify(orders));
+
+            // Reset cart & form
+            cart = [];
+            updateCartUI();
+            document.getElementById('cust-name').value = '';
+            document.getElementById('cust-phone').value = '';
+            document.getElementById('cust-address').value = '';
+            toggleCartModal(false);
+
+            renderOrdersTable();
+            showCustomModal("¡Pedido Registrado con Éxito!", `Tu compra ${newOrder.id} ha sido registrada correctamente en el sistema de la tienda. Gracias por preferir MachuCombo.`, "success");
+        }
+
+        // Admin Table Rendering & Management
+        function renderOrdersTable() {
+            const tbody = document.getElementById('orders-table-body');
+            const emptyMsg = document.getElementById('empty-orders-msg');
+            tbody.innerHTML = '';
+
+            document.getElementById('stat-total-orders').innerText = orders.length;
+            const totalRev = orders.reduce((sum, o) => sum + o.total, 0);
+            document.getElementById('stat-total-revenue').innerText = `Bs ${totalRev.toFixed(2)}`;
+
+            if(orders.length === 0) {
+                emptyMsg.classList.remove('hidden');
+                return;
+            }
+            emptyMsg.classList.add('hidden');
+
+            orders.forEach((o, index) => {
+                const itemsList = o.items.map(i => `${i.quantity}x ${i.name} (${i.selectedGrind}, ${i.selectedAddon})`).join('<br>');
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="p-4 font-bold text-brand-700">${o.id}</td>
+                        <td class="p-4">
+                            <span class="font-bold text-slate-900 block">${o.customer.name}</span>
+                            <span class="text-xs text-slate-500"><i class="fa-solid fa-phone mr-1"></i>${o.customer.phone}</span>
+                            <span class="block text-xs text-slate-500"><i class="fa-solid fa-location-dot mr-1"></i>${o.customer.address}</span>
+                        </td>
+                        <td class="p-4 text-xs text-slate-600">${o.date}</td>
+                        <td class="p-4 text-xs text-slate-700 space-y-1">${itemsList}</td>
+                        <td class="p-4 font-bold text-slate-900">Bs ${o.total.toFixed(2)}</td>
+                        <td class="p-4 text-center">
+                            <button onclick="deleteOrder(${index})" class="text-rose-500 hover:text-rose-700 p-2" title="Eliminar Registro"><i class="fa-solid fa-trash-can"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function deleteOrder(index) {
+            orders.splice(index, 1);
+            localStorage.setItem('machucombo_orders', JSON.stringify(orders));
+            renderOrdersTable();
+            showCustomModal("Registro Eliminado", "El pedido seleccionado ha sido borrado del registro.", "success");
+        }
+
+        function clearAllOrders() {
+            if(confirm("¿Estás seguro de limpiar todo el registro de compras?")) {
+                orders = [];
+                localStorage.removeItem('machucombo_orders');
+                renderOrdersTable();
+                showCustomModal("Registros Limpiados", "Se vació la base de datos local de compras.", "success");
+            }
+        }
+
+        function exportOrdersJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(orders, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "machucombo_compras_santivanez.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        // Custom Modal helper
+        function showCustomModal(title, message, type = 'success') {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = message;
+            const icon = document.getElementById('modal-icon');
+            if(type === 'success') {
+                icon.className = "w-16 h-16 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center text-2xl mx-auto mb-4";
+                icon.innerHTML = '<i class="fa-solid fa-check"></i>';
+            } else {
+                icon.className = "w-16 h-16 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-2xl mx-auto mb-4";
+                icon.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+            }
+            document.getElementById('custom-modal').classList.remove('hidden');
+        }
+
+        function closeCustomModal() {
+            document.getElementById('custom-modal').classList.add('hidden');
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            renderStore();
+            renderOrdersTable();
+        }
+    </script>
+</body>
+</html>
